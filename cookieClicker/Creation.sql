@@ -1,66 +1,74 @@
-create database cookieClicker;
-use cookieClicker;
+CREATE DATABASE IF NOT EXISTS cookieClicker;
+USE cookieClicker;
 
-create table Users (
-
-    id int primary key auto_increment,
-    username varchar(255) not null,
-    password varchar(255) not null;
-
+-- Table Users
+CREATE TABLE IF NOT EXISTS Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
 );
 
-create table Scoring (
-
-    id int primary key auto_increment,
-    score int not null,
-    id_user int not null constraint fk_id_user foreign key (id_user) references users(id),
-    timeMAJ timestamp not null default current_timestamp on update current_timestamp;
-
+-- Table Scoring
+CREATE TABLE IF NOT EXISTS Scoring (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    score INT NOT NULL,
+    id_user INT NOT NULL,
+    timeMAJ TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_id_user FOREIGN KEY (id_user) REFERENCES Users(id)
 );
 
-create table Automate(
-
-    id int primary key auto_increment,
-    prix int not null,
-    mutliplicateurPrix int not null,
-    nom varchar(255) not null,
-    description text not null,
-    image varchar(255) not null,
-    scoreGiver int not null,
-    mutliplicateurScore int not null;
-
+-- Table Poisson
+CREATE TABLE IF NOT EXISTS Poisson (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    prix INT NOT NULL,
+    multiplicateurPrix INT NOT NULL,
+    nom VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    scoreGiver INT NOT NULL,
+    multiplicateurScore INT NOT NULL,
+    degat INT NOT NULL,
+    recolte INT NOT NULL
 );
 
-create table AutomateUsers(
-
-    id_user int not null,
-    id_automate int not null,
-    primary key (id_user, id_automate),
-    constraint fk_id_user foreign key (id_user) references users(id),
-    constraint fk_id_automate foreign key (id_automate) references automate(id),
-    timeMAJ timestamp not null default current_timestamp on update current_timestamp;
-
-)
-create table Upgrades(
-    
-    id int primary key auto_increment,
-    prix int not null,
-    scoreMultplier int not null,
-    nom varchar(255) not null,
-    image varchar(255) not null;
-
+-- Table PoissonUsers
+CREATE TABLE IF NOT EXISTS PoissonUsers (
+    id_user INT NOT NULL,
+    id_poisson INT NOT NULL,
+    timeMAJ TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    quantite INT NOT NULL,
+    PRIMARY KEY (id_user, id_poisson),
+    CONSTRAINT fk_id_user_poisson FOREIGN KEY (id_user) REFERENCES Users(id),
+    CONSTRAINT fk_id_poisson FOREIGN KEY (id_poisson) REFERENCES Poisson(id)
 );
 
-create table UpgradesUsers(
-
-    id_upgrade int not null,
-    id_user int not null,
-    primary key (id_upgrade, id_user),
-    constraint fk_id_upgrade foreign key (id_upgrade) references upgrades(id),
-    constraint fk_id_user foreign key (id_user) references users(id),
-    timeMAJ timestamp not null default current_timestamp on update current_timestamp;
+-- Table Upgrades
+CREATE TABLE IF NOT EXISTS Upgrades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    prix INT NOT NULL,
+    scoreMultplier INT NOT NULL,
+    nom VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL
 );
 
+-- Table UpgradesUsers
+CREATE TABLE IF NOT EXISTS UpgradesUsers (
+    id_upgrade INT NOT NULL,
+    id_user INT NOT NULL,
+    timeMAJ TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    quantite INT NOT NULL,
+    PRIMARY KEY (id_upgrade, id_user),
+    CONSTRAINT fk_id_upgrade FOREIGN KEY (id_upgrade) REFERENCES Upgrades(id),
+    CONSTRAINT fk_id_user_upgrade FOREIGN KEY (id_user) REFERENCES Users(id)
+);
 
-
-
+-- Table Bateau
+CREATE TABLE IF NOT EXISTS Bateau (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    scoreGiver INT NOT NULL,
+    mutliplicateurScore INT NOT NULL,
+    pointDeVie INT NOT NULL
+);
