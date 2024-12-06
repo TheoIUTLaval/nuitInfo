@@ -73,16 +73,34 @@ header {
     align-items: center;
 }
 
-.corps img {
-    width: 50%; /* Ajuster la taille de l'image */
-    height: auto;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Ombre plus douce et large */
-    border-radius: 12px;
-    transition: transform 0.3s ease-in-out; /* Animation de transformation */
+.corps-content{
+    width: 40%;
+    height: 150vh;
+    background-image: url("image/corps_humain.png");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.corps-content img{
+    position: absolute;
+    transition-duration: 0.2s;
+}
+.corps-content img:hover{
 }
 
-.corps img:hover {
-    transform: scale(1.05); /* Légère animation au survol */
+.cerveau{
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    top: 50px;
+    transform: translateX(-50%);
+}
+.coeur{
+    width:  100px;
+    height: 100px;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, -50%);
 }
 
 /* Section Savoir plus */
